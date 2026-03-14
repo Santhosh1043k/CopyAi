@@ -84,16 +84,17 @@ export default function WizardForm() {
         );
       }
       
-      // Transform API response to match GeneratedCopy format
+      // Transform API response to match GeneratedCopy format (coerce unknown to string for TS strict)
+      const str = (v: unknown, fallback: string) => (typeof v === "string" ? v : fallback);
       const generatedCopy: GeneratedCopy = {
-        heroHeadline: data.hero || "Your headline here",
-        subHeadline: data.sub || "Your subheadline here",
-        ctaButton: data.cta || formData.ctaGoal || "Try Free",
-        problemSection: data.problem || "Problem description here",
-        featuresSection: Array.isArray(data.features) 
-          ? data.features.map((f: string, i: number) => `Feature ${i + 1}: ${f}`).join("\n")
+        heroHeadline: str(data.hero, "Your headline here"),
+        subHeadline: str(data.sub, "Your subheadline here"),
+        ctaButton: str(data.cta, formData.ctaGoal || "Try Free"),
+        problemSection: str(data.problem, "Problem description here"),
+        featuresSection: Array.isArray(data.features)
+          ? (data.features as string[]).map((f, i) => `Feature ${i + 1}: ${f}`).join("\n")
           : "Feature 1: Your first feature\nFeature 2: Your second feature\nFeature 3: Your third feature",
-        footerCta: data.footer_cta || "Ready to get started?",
+        footerCta: str(data.footer_cta, "Ready to get started?"),
       };
       
       setResult(generatedCopy);
