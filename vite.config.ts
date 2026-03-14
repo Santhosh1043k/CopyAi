@@ -4,8 +4,7 @@ import tsConfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 import viteReact from '@vitejs/plugin-react'
 
-// Note: In development, /api/* requests are proxied to the API server.
-// In production on Vercel, these are handled by Vercel Serverless Functions in the /api directory.
+// In development, /api/* is proxied to the Express API server (port 3001).
 export default defineConfig({
   server: {
     port: 3000,

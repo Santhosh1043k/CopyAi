@@ -73,7 +73,7 @@ export default function WizardForm() {
         throw new Error(
           response.ok
             ? "Invalid response from server"
-            : `Request failed (${response.status}). Make sure the API server is running on port 3001.`
+            : `Request failed (${response.status}). Make sure the API server is running.`
         );
       }
 

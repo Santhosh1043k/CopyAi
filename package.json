@@ -4,13 +4,13 @@
   "sideEffects": false,
   "type": "module",
   "scripts": {
-    "dev": "npx convex dev --once && concurrently -r npm:dev:web npm:dev:api npm:dev:convex",
-    "dev:web": "vite dev",
+    "dev": "concurrently \"vite\" \"node server/index.js\"",
+    "dev:web": "vite",
     "dev:api": "node server/index.js",
     "dev:ts": "tsc -b -w",
     "dev:convex": "npx convex dev",
     "build": "vite build && tsc --noEmit",
-    "start": "node .output/server/index.mjs",
+    "start": "vite preview",
     "format": "prettier --write .",
     "lint": "tsc && eslint .  --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },

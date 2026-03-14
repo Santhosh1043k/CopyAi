@@ -9,14 +9,9 @@ npm run dev
 
 This single command starts:
 - **Vite dev server** (frontend) on port 3000
-- **API server** on port 3001 for `/api/generate` (using Vercel Functions logic)
-- **Convex** backend
+- **Express API server** on port 3001; Vite proxies `/api/*` to it automatically
 
-Alternatively, you can use `vercel dev` to more closely replicate the production environment:
-
-```bash
-vercel dev
-```
+To also run Convex: in a second terminal run `npm run dev:convex`.
 
 ### Environment Setup
 
@@ -32,7 +27,6 @@ Required environment variables:
 
 ### Architecture
 
-- **Frontend**: TanStack Start / React app running on `http://localhost:3000`
-- **Backend (API)**: Vercel Serverless Functions in the `api/` directory
-- **Local Dev**: In development, Vite proxies `/api/*` requests to port 3001.
-- **Production**: Vercel routes `/api/*` directly to the serverless functions.
+- **Frontend**: TanStack Start / React app on `http://localhost:3000`
+- **API**: Express server on port 3001; Vite proxies `/api/*` to it in development
+- **Production**: Set `VITE_API_URL` to your deployed API origin (e.g. Railway) so the frontend calls the correct host
