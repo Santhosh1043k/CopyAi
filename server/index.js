@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { config } from 'dotenv';
@@ -7,6 +8,18 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 config({ path: join(__dirname, '..', '.env.local') });
 
 const app = express();
+
+// CORS middleware - allows cross-origin requests from the frontend
+// In production, you may want to restrict this to your frontend domain
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? process.env.FRONTEND_URL || false 
+    : '*',
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type'],
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const PORT = process.env.API_PORT || 3001;
