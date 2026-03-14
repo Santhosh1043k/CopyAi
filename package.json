@@ -9,7 +9,7 @@
     "dev:api": "node server/index.js",
     "dev:ts": "tsc -b -w",
     "dev:convex": "npx convex dev",
-    "build": "vite build && tsc --noEmit",
+    "build": "vite build --mode client && tsc --noEmit",
     "start": "vite preview",
     "format": "prettier --write .",
     "lint": "tsc && eslint .  --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
