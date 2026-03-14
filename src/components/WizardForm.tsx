@@ -50,8 +50,7 @@ export default function WizardForm() {
     setError(null);
 
     try {
-      const apiBase = (import.meta as unknown as { env: { VITE_API_URL?: string } }).env.VITE_API_URL ?? "";
-      const response = await fetch(`${apiBase}/api/generate`, {
+      const response = await fetch("/api/generate", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

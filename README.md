@@ -9,10 +9,14 @@ npm run dev
 
 This single command starts:
 - **Vite dev server** (frontend) on port 3000
-- **Express API server** on port 3001 for `/api/generate`
+- **API server** on port 3001 for `/api/generate` (using Vercel Functions logic)
 - **Convex** backend
 
-The API server includes CORS headers for cross-origin requests from the frontend.
+Alternatively, you can use `vercel dev` to more closely replicate the production environment:
+
+```bash
+vercel dev
+```
 
 ### Environment Setup
 
@@ -26,13 +30,9 @@ cp .env.huggingface.example .env.local
 Required environment variables:
 - `HF_TOKEN` - Your Hugging Face API token (get one at https://huggingface.co/settings/tokens)
 
-Optional environment variables:
-- `HF_MODEL` - Hugging Face model to use (default: `mistralai/Mistral-7B-Instruct-v0.2`)
-- `API_PORT` - Port for API server (default: 3001)
-- `VITE_API_URL` - **Production only:** API origin (e.g. `https://web-production-579dd.up.railway.app`). Leave unset locally so the app uses the Vite proxy to localhost:3001.
-
 ### Architecture
 
-- Frontend runs on `http://localhost:3000`
-- API requests to `/api/*` are proxied to Express server on port 3001
-- The Express server handles AI generation via Hugging Face API with fallback templates
+- **Frontend**: TanStack Start / React app running on `http://localhost:3000`
+- **Backend (API)**: Vercel Serverless Functions in the `api/` directory
+- **Local Dev**: In development, Vite proxies `/api/*` requests to port 3001.
+- **Production**: Vercel routes `/api/*` directly to the serverless functions.
