@@ -29,6 +29,7 @@ Required environment variables:
 Optional environment variables:
 - `HF_MODEL` - Hugging Face model to use (default: `mistralai/Mistral-7B-Instruct-v0.2`)
 - `API_PORT` - Port for API server (default: 3001)
+- `VITE_API_URL` - **Production only:** API origin (e.g. `https://web-production-579dd.up.railway.app`). Leave unset locally so the app uses the Vite proxy to localhost:3001.
 
 ### Architecture
 

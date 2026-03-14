@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { CopyFormData, GeneratedCopy } from "~/lib/copyGenerator";
-import { toneLabels, toneDescriptions } from "~/lib/copyGenerator";
+import { toneDescriptions, toneLabels } from "~/lib/copyGenerator";
 import CopyPreview from "~/components/CopyPreview";
 
 const STEPS = [
@@ -50,7 +50,8 @@ export default function WizardForm() {
     setError(null);
 
     try {
-      const response = await fetch("/api/generate", {
+      const apiBase = (import.meta as unknown as { env: { VITE_API_URL?: string } }).env.VITE_API_URL ?? "";
+      const response = await fetch(`${apiBase}/api/generate`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,8 +80,7 @@ export default function WizardForm() {
 
       if (!response.ok) {
         throw new Error(
-          (data && typeof data.error === "string" ? data.error : null) ||
-            "Generation failed"
+          (typeof data.error === "string" ? data.error : null) ?? "Generation failed"
         );
       }
       
@@ -92,7 +92,7 @@ export default function WizardForm() {
         ctaButton: str(data.cta, formData.ctaGoal || "Try Free"),
         problemSection: str(data.problem, "Problem description here"),
         featuresSection: Array.isArray(data.features)
-          ? (data.features as string[]).map((f, i) => `Feature ${i + 1}: ${f}`).join("\n")
+          ? (data.features as Array<string>).map((f, i) => `Feature ${i + 1}: ${f}`).join("\n")
           : "Feature 1: Your first feature\nFeature 2: Your second feature\nFeature 3: Your third feature",
         footerCta: str(data.footer_cta, "Ready to get started?"),
       };
