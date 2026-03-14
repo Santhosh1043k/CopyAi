@@ -4,6 +4,8 @@ import tsConfigPaths from 'vite-tsconfig-paths'
 import tailwindcss from '@tailwindcss/vite'
 import viteReact from '@vitejs/plugin-react'
 
+// Note: All /api/* requests are proxied to the Express server (server/index.js)
+// The app/api/ directory routes are not used in this architecture
 export default defineConfig({
   server: {
     port: 3000,
